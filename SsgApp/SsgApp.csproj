@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateHeimdallStaticSiteOnBuild>true</GenerateHeimdallStaticSiteOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Heimdall\Heimdall.Server\Heimdall.Server.csproj" />
+    <ProjectReference Include="..\..\Heimdall\Heimdall.Web\Heimdall.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="1.3.2" />
+  </ItemGroup>
+
+  <Import Project="..\..\Heimdall\Heimdall.Server\buildTransitive\HeimdallFramework.Server.targets" Condition="Exists('..\..\Heimdall\Heimdall.Server\buildTransitive\HeimdallFramework.Server.targets')" />
+
+</Project>

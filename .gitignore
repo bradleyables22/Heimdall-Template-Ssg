@@ -1,0 +1,17 @@
+bin/
+obj/
+dist/
+.vs/
+SsgApp/bin/
+SsgApp/obj/
+SsgApp/dist/
+SsgApp/wwwroot/404.html
+SsgApp/wwwroot/index.html
+SsgApp/wwwroot/_content/
+SsgApp/wwwroot/hybrid/
+SsgApp/wwwroot/markdown/
+SsgApp/wwwroot/heimdall.static.manifest.json
+SsgApp/wwwroot/mvc-view/
+SsgApp/wwwroot/robots.txt
+SsgApp/wwwroot/sitemap.xml
+*.user
