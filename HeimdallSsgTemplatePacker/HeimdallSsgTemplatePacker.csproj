@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
+		<PackageType>Template</PackageType>
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+
+		<PackageId>HeimdallFramework.Templates.SsgApp</PackageId>
+		<Version>3.0.0</Version>
+		<Authors>Bradley Ables</Authors>
+		<Description>Heimdall ASP.NET Core static site generation starter template using fluent pages, MVC views, markdown content, copied assets, and hybrid runtime sections.</Description>
+		<PackageTags>heimdall;templates;aspnetcore;ssg;static-site-generation;documentation;server-driven-ui;html;ssr;hypermedia</PackageTags>
+		<RepositoryUrl>https://github.com/bradleyables22/Heimdall</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>heimdall-128.png</PackageIcon>
+
+		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="..\SsgApp\**\*"
+				 Exclude="..\SsgApp\**\bin\**;
+						  ..\SsgApp\**\obj\**;
+						  ..\SsgApp\**\.vs\**;
+						  ..\SsgApp\**\.git\**;
+						  ..\SsgApp\**\*.user;
+						  ..\SsgApp\wwwroot\_content\**;
+						  ..\SsgApp\wwwroot\hybrid\**;
+						  ..\SsgApp\wwwroot\markdown\**;
+						  ..\SsgApp\wwwroot\mvc-view\**;
+						  ..\SsgApp\wwwroot\404.html;
+						  ..\SsgApp\wwwroot\heimdall.static.manifest.json;
+						  ..\SsgApp\wwwroot\index.html;
+						  ..\SsgApp\wwwroot\robots.txt;
+						  ..\SsgApp\wwwroot\sitemap.xml"
+				 Pack="true"
+				 PackagePath="content/" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="heimdall-128.png" Pack="true" PackagePath="\" />
+		<None Include="..\LICENSE" Pack="true" PackagePath="\" Link="LICENSE" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

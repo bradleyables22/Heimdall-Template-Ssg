@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Bradley Ables",
+  "classifications": [
+    "Web",
+    "ASP.NET",
+    "Heimdall",
+    "SSG",
+    "Static Site",
+    "Documentation",
+    "SSR",
+    "MPA"
+  ],
+  "identity": "Heimdall.SsgApp.Template",
+  "name": "Heimdall SSG App",
+  "shortName": "heimdall-ssg",
+  "sourceName": "SsgApp",
+  "description": "ASP.NET Core static site generation starter using Heimdall for explicit route generation, MVC view rendering, markdown content, copied assets, and hybrid runtime sections.",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "preferNameDirectory": true
+}

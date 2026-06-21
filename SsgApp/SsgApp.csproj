@@ -8,14 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Heimdall\Heimdall.Server\Heimdall.Server.csproj" />
-    <ProjectReference Include="..\..\Heimdall\Heimdall.Web\Heimdall.Web.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="HeimdallFramework.Server" Version="3.0.0" />
+    <PackageReference Include="HeimdallFramework.Web" Version="3.0.0" />
     <PackageReference Include="Markdig" Version="1.3.2" />
   </ItemGroup>
-
-  <Import Project="..\..\Heimdall\Heimdall.Server\buildTransitive\HeimdallFramework.Server.targets" Condition="Exists('..\..\Heimdall\Heimdall.Server\buildTransitive\HeimdallFramework.Server.targets')" />
 
 </Project>

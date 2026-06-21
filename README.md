@@ -1,75 +1,117 @@
-# Heimdall SSG Documentation Template
+# Heimdall SSG App Template
 
-This project is a small ASP.NET Core documentation app for testing Heimdall static site generation against the local Heimdall source tree. It demonstrates four production-shaped documentation page styles:
+This repository contains the ASP.NET Core static site generation starter template for Heimdall. It demonstrates explicit route generation, shared layouts, path-base aware assets, MVC view rendering, markdown rendering, generated sitemap and robots.txt files, and hybrid pages that can still use Heimdall runtime actions when served by the ASP.NET Core app.
 
-- `/` documents the SSG overview and is generated from fluent Heimdall HTML.
-- `/mvc-view/` documents MVC rendering and is generated from a Razor partial.
-- `/markdown/` documents markdown rendering and is generated from a Markdig-rendered markdown file.
-- `/hybrid/` documents hybrid static/runtime sections and hydrates a live panel with a Heimdall load action when the app is running.
+The template application components included in this repository are examples. Keep the pieces that fit your app and remove the rest.
 
-`SsgApp` references `Heimdall.Server` and `Heimdall.Web` as project dependencies:
+Full documentation:
 
-```xml
-<ProjectReference Include="..\..\Heimdall\Heimdall.Server\Heimdall.Server.csproj" />
-<ProjectReference Include="..\..\Heimdall\Heimdall.Web\Heimdall.Web.csproj" />
+https://heimdall-framework.org
+
+---
+
+## How To Install
+
+Install the SSG template from NuGet:
+
+```powershell
+dotnet new install HeimdallFramework.Templates.SsgApp
 ```
 
-That lets the template exercise v3 SSG and hybrid runtime changes without waiting for a NuGet package.
+Create a new SSG app:
 
-Because project references do not import NuGet `buildTransitive` assets, the template imports Heimdall's local MSBuild target file directly. A packaged consumer only needs the package reference and the property.
-
-```xml
-<GenerateHeimdallStaticSiteOnBuild>true</GenerateHeimdallStaticSiteOnBuild>
+```powershell
+dotnet new heimdall-ssg -n MyHeimdallDocs
 ```
 
-## Run The App
+Run it:
 
-```bash
-dotnet run --project SsgApp
+```powershell
+cd MyHeimdallDocs
+dotnet run
 ```
 
-Served pages:
+---
 
-- `http://localhost:5029/`
-- `http://localhost:5029/mvc-view/`
-- `http://localhost:5029/markdown/`
-- `http://localhost:5029/hybrid/`
-- `http://localhost:5029/404.html`
-- `http://localhost:5029/sitemap.xml`
-- `http://localhost:5029/robots.txt`
+## What This Template Includes
+
+- ASP.NET Core app configured for Heimdall static site generation
+- Explicit `WithStaticPage(...)` route registration
+- A shared path-base aware site layout
+- FluentHtml page rendering
+- MVC view rendering for generated pages
+- Markdown rendering with Markdig
+- Hybrid static/runtime page using a Heimdall content action
+- Web root asset copying
+- Static web asset copying for the Heimdall runtime
+- Favicon and stylesheet assets
+- Generated `404.html`
+- Generated `sitemap.xml`
+- Generated `robots.txt`
+- Generated `heimdall.static.manifest.json`
+- Build-time generation through `GenerateHeimdallStaticSiteOnBuild`
+
+Generated sample routes:
+
+- `/`
+- `/mvc-view/`
+- `/markdown/`
+- `/hybrid/`
+- `/404.html`
+- `/sitemap.xml`
+- `/robots.txt`
+
+---
 
 ## Generate Static Output
 
-```bash
-dotnet run --project SsgApp -- --heimdall-generate-static
-```
+The template generates static output after a successful build:
 
-The helper also accepts `--generate-static` and `generate-static` for manual runs.
-
-The template also generates static output after a successful build:
-
-```bash
+```powershell
 dotnet build
 ```
 
-The template writes generated pages to the ASP.NET Core web root so the generated output matches the public static root:
+You can also generate explicitly:
+
+```powershell
+dotnet run -- --heimdall-generate-static
+```
+
+The helper also accepts:
+
+```powershell
+dotnet run -- --generate-static
+dotnet run -- generate-static
+```
+
+Generated output is written to:
+
+```text
+SsgApp/wwwroot/
+```
+
+The app uses:
 
 ```csharp
 options.UseWebRootPath();
 options.CleanOutputPath = true;
+options.CopyWebRootAssets = true;
+options.CopyStaticWebAssets = true;
 options.UseSitemap("https://example.com");
 options.UseRobotsTxt();
 ```
 
-The layout and page examples route internal links and local assets through `ctx.ToSitePath(...)`. That keeps the template root-hosted by default, while letting a subdirectory deployment switch to:
+For a separate CI/CD artifact folder, switch to:
 
 ```csharp
-options.UsePathBase("/portal");
+options.UseContentRootPath("dist");
 ```
 
-With that setting, generated links such as `/hybrid/`, `/css/site.css`, and `/_content/...` become `/portal/hybrid/`, `/portal/css/site.css`, and `/portal/_content/...`.
+---
 
-The request pipeline serves those generated default documents with:
+## Runtime Serving
+
+The request pipeline serves generated default documents and still enables Heimdall endpoints for hybrid runtime sections:
 
 ```csharp
 app.MapStaticAssets();
@@ -80,18 +122,59 @@ app.UseHeimdall();
 ```
 
 `UseDefaultFiles()` must run before `UseStaticFiles()` so `/` can resolve to `wwwroot/index.html`.
+
 `UseHeimdall()` enables the hybrid page's live content action after the generated shell has loaded.
 
-For a clean CI/CD artifact folder instead, use:
+---
+
+## Path Base
+
+The layout and page examples route internal links and local assets through `ctx.ToSitePath(...)`. That keeps the template root-hosted by default and supports subdirectory deployment:
 
 ```csharp
-options.UseContentRootPath("dist");
+options.UsePathBase("/portal");
 ```
 
-Output is written to:
+With that setting, generated links such as `/hybrid/`, `/css/site.css`, `/Images/Favicon.png`, and `/_content/...` become `/portal/hybrid/`, `/portal/css/site.css`, `/portal/Images/Favicon.png`, and `/portal/_content/...`.
+
+---
+
+## Package Versions
+
+The template currently targets:
+
+- `HeimdallFramework.Server` `3.0.0`
+- `HeimdallFramework.Web` `3.0.0`
+- `Markdig` `1.3.2`
+- `.NET` `net10.0`
+
+---
+
+## Building The Template Package
+
+This repository includes a template packer project.
+
+```powershell
+dotnet build Heimdall-Template-Ssg.slnx
+dotnet pack HeimdallSsgTemplatePacker\HeimdallSsgTemplatePacker.csproj -c Release -o artifacts\packages
+```
+
+The package is emitted as:
 
 ```text
-SsgApp/wwwroot/
+artifacts/packages/HeimdallFramework.Templates.SsgApp.3.0.0.nupkg
 ```
 
-The generated output includes HTML pages, copied static web assets, `404.html`, `sitemap.xml`, `robots.txt`, and `heimdall.static.manifest.json`. The manifest lets later clean runs remove stale generated files without deleting hand-authored web root assets.
+You can test the local package before publishing:
+
+```powershell
+dotnet new install .\artifacts\packages\HeimdallFramework.Templates.SsgApp.3.0.0.nupkg
+dotnet new heimdall-ssg -n SmokeTestSsgApp
+dotnet build .\SmokeTestSsgApp\SmokeTestSsgApp.csproj
+```
+
+---
+
+## License
+
+MIT

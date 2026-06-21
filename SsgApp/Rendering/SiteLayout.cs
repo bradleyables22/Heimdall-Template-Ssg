@@ -35,6 +35,12 @@ public static class SiteLayout
                                 .Title(t => t.Text(title))
                                 .Link(l =>
                                 {
+                                    l.Attr("rel", "icon")
+                                        .Type("image/png")
+                                        .Href(toSitePath("/Images/Favicon.png"));
+                                })
+                                .Link(l =>
+                                {
                                     l.Attr("rel", "stylesheet")
                                         .Href("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css");
                                 })
