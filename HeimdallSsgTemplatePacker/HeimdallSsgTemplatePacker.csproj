@@ -10,7 +10,7 @@
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
 
 		<PackageId>HeimdallFramework.Templates.SsgApp</PackageId>
-		<Version>3.0.5</Version>
+		<Version>3.0.7</Version>
 		<Authors>Bradley Ables</Authors>
 		<Description>Heimdall ASP.NET Core static site generation starter template using fluent pages, MVC views, markdown content, copied assets, and hybrid runtime sections.</Description>
 		<PackageTags>heimdall;templates;aspnetcore;ssg;static-site-generation;documentation;server-driven-ui;html;ssr;hypermedia</PackageTags>
